@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -60,17 +59,7 @@ UserSchema.statics.findByCredentials = async (email, password) => {
   if (!isMatch) {
     throw new Error('Unable to login')
   }
-
-  // const token = await jwt.sign(user._id.toString(), process.env.JWT_SECRET, {expiresIn: 360000}, (err, token) => {
-  //   if(err) throw err;
-  //   res.send(token)
-  // });
-  
-
   return user
-  
-  
-  
 }
 
 // Generate the token

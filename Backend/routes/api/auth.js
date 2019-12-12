@@ -62,8 +62,29 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-router.post('/login', (req, res) => {
+router.post('/signin', async (req, res) => {
+  const { email, password } = req.body;
+  const user = await User.findByCredentials(email, password);
   
+  const payload = {
+    user: {
+      id: user.id
+    }
+  };
+
+  try {
+    jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: 36000
+    }, (err, token) => {
+      if (err) throw err;
+      res.json({
+        token
+      })
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Server Error')
+  }
 })
 
 module.exports = router;
