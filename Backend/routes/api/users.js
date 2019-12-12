@@ -1,10 +1,14 @@
 const express = require('express');
 
-const router = express.Router();
 
-//@route GET api/users
-router.get('/', (req,res) => {
-  res.send('User route')
-})
+const router = new express.Router();
+
+//@route post api/users/signup -- signup
+
+
+//@ route POST api/users --signin
+
+
+//@ route POST api/logout --signouts
 
 module.exports = router;
