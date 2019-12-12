@@ -88,4 +88,4 @@ UserSchema.pre('save', async function (next) {
 
 // const User = mongoose.model('User', UserSchema);
 // module.exports = User;
-module.exports = User = mongoose.model('User', UserSchema);
+module.exports = User = mongoose.model('User', UserSchema); // modelName "User"는 ref로 사용된다
