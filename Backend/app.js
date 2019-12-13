@@ -20,7 +20,7 @@ app.use(express.json({
 // Routes
 app.use('/api/users', users);
 app.use('/api/auth', auth);
-app.use(profile);
-app.use(posts);
+app.use('/api/profile', profile);
+app.use('/api/posts', posts);
 
 module.exports = app;
