@@ -62,15 +62,18 @@ router.post('/', [
       profileFields.skills = skills.split(',').map(skill => skill.trim());
     };
     
+    //Build Profile Social Object
     profileFields.social = {};
     if (youtube) profileFields.social.youtube = youtube;
     if (twitter) profileFields.social.twitter = twitter;
     if (facebook) profileFields.social.facebook = facebook;
     if (linkedin) profileFields.social.linkedin = linkedin;
     if (instagram) profileFields.social.instagram = instagram;
-    console.log(profileFields.social.twitter);
+    
+
     try {
-      let profile = Profile.findOne({ user: req.user.id });
+      let profile = await Profile.findOne({ user: req.user.id });
+
       if(profile){
         // Update
         profile = await Profile.findOneAndUpdate(
@@ -89,6 +92,38 @@ router.post('/', [
     } catch(err){
       console.error(err.message);
       res.status(500).send('Server Error');
+    }
+  });
+
+  //@route GET api/profile/
+  router.get('/', async (req, res) => {
+    try {
+      const profiles = await Profile.find().populate('user', ['name,', 'avatar'])
+      res.json(profiles);
+    } catch(err) {
+      console.error(err);
+      res.status(500).send('Server Error')
+    }
+  });
+
+  //@route GET api/profile/user/:user_id
+  router.get('/user/:user_id', async (req, res) => {
+    try {
+      const profile = await Profile.findOne({user: req.params.user_id}).populate('user', ['name,', 'avatar'])
+      if(!profile) {
+        return res.status(400).json({
+          msg: 'Profile not found'
+        });
+      }
+      res.json(profile);
+    } catch (err) {
+      console.error(err);
+      if(err.kind == 'ObjectId') {
+        return res.status(400).json({
+          msg: 'Profile not found'
+        });
+      }
+      res.status(500).send('Server Error')
     }
   });
 
