@@ -8,7 +8,7 @@ const Profile = require('../../models/Profile');
 
 const router = express.Router();
 
-//@route POST api/users
+//@route POST api/posts
 router.post ('/', [
   auth, 
   [
@@ -38,7 +38,7 @@ router.post ('/', [
   }
 });
 
-//@route GET api/users
+//@route GET api/posts
 //@access Private
 router.get('/', auth, async (req, res) => {
   try {
@@ -50,7 +50,7 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-//@route GET api/users/:id
+//@route GET api/posts/:id
 //@access Private
 router.get('/:id', auth, async (req, res) => {
   try {
@@ -68,7 +68,7 @@ router.get('/:id', auth, async (req, res) => {
   }
 });
 
-//@route DELETE api/users/:id
+//@route DELETE api/posts/:id
 router.delete('/:id', auth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -90,5 +90,81 @@ router.delete('/:id', auth, async (req, res) => {
     res.status(500).send('Server Error');
   };
 });
+
+//@route PUT api/posts/likes/:id
+//@desc Like post
+//@access Private
+router.put('/like/:id', auth, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    // Check if the post has already been linked
+    if(post.likes.filter(like => like.user.toString() === req.user.id).length > 0){
+      return res.status(400).json({msg: 'Post already liked'});
+    };
+
+    post.likes.unshift({ user: req.user.id });
+    await post.save();
+    res.json(post.likes);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  };
+});
+
+//@route PUT api/posts/unlike/:id
+//@desc Unlike post
+//@access Private
+router.put('/unlike/:id', auth, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if(post.likes.filter(like => like.user.toString() === req.user.id).length === 0){
+      return res.status(400).json({msg: 'Post has not yet been liked'});
+    }
+    // Get remove Index
+    const removeIndex = post.likes.map(like => like.user.toString()).indexOf(req.user.id);
+    post.likes.splice(removeIndex, 1);
+    await post.save();
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  };
+});
+
+//@route POST api/users/:id
+//@desc Create post
+//@access Private
+router.post('/comment/:id',
+  [
+  auth, 
+    [
+      check('text', 'Text is Required').not().isEmpty()
+    ]
+  ], async (req, res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+      return res.status(400).json({errors : errors.array()});
+    };
+
+    try {
+      const user = await User.findById(req.user.id).select('-password');
+      const post = await Post.findById(req.params.id);
+
+      const newComment = {
+        text: req.body.text,
+        name: user.name,
+        avatar: user.avatar,
+        user: req.user.id
+      };
+    
+      post.comments.unshift(newComment);
+      await post.save();
+
+      res.json(post.comments)
+    } catch(err){
+      console.error(err)
+      res.status(500).send('Server Error');
+    };
+}) 
 
 module.exports = router;
