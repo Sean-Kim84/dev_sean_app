@@ -1,0 +1,23 @@
+footer {
+  width:100%;
+  height: $large-size;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  position: absolute;
+  bottom: 0;
+  background: $black-color;
+  color: $white-color;
+  align-items: center;
+  justify-items: center;
+  font-size: $font-m;
+  
+}
+
+.footer_icons {
+  display: flex;
+  font-size: $font-l;
+}
+
+.footer_icon {
+  padding-left: $medium-size
+}

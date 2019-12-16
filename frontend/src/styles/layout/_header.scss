@@ -1,0 +1,24 @@
+header {
+  width: 100%;
+  height: $large-size;
+  background-color: $black-color;
+  color: $white-color;
+  display: grid; 
+  grid-template-columns: 3.5fr 1fr;
+  align-items: center;
+  text-decoration: none;
+  padding-left: $small-size;
+  font-size: $font-m;
+  text-transform: uppercase;
+  .maintitle {
+    letter-spacing: $xsmall-size;
+  }
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  li {
+    list-style: none;
+  }
+}
