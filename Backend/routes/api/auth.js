@@ -1,6 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const gravatar = require('gravatar');
+const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
 const User = require('../../models/User');
 
@@ -17,7 +18,18 @@ router.get('/', auth, async (req, res) => {
 });
 
 //@route Post api/auth
-router.post('/signup', async (req, res) => {
+router.post('/signup', [
+  check('name',  'Name is Required').not().isEmpty(),
+  check('password', 'Password is Required').not().isEmpty(),
+  check('email', 'Email is Required').not().isEmpty()
+],
+async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      errors: errors.array()
+    });
+  }
   try {
     const {
       name,
