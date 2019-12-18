@@ -1,19 +1,22 @@
 import axios from 'axios';
-import { setAlert } from './alert';
 import { API } from '../config';
-
+import { loadUser } from './auth'
 import { GET_PROFILE, PROFILE_ERROR } from './types';
 
 // Get current User profile
 export const getCurrentProfile = () => async (dispatch) => {
-  try {
+  await dispatch(loadUser());
+  try { 
+    
     const res = await axios.get(`${API}/profile/me`);
-    console.log(res.data);
     dispatch({
       type: GET_PROFILE,
       payload: res.data
     });
+
+    
   } catch(err){
+    console.log(err);
     dispatch({
       type: PROFILE_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status }

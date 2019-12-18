@@ -1,6 +1,12 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-const Landing = () => {
+
+const Landing = (props) => {
+  if(props.isAuthenticated){
+    return <Redirect to="/dashboard" />
+  }
   return (
     <div className="landing">
       
@@ -8,4 +14,8 @@ const Landing = () => {
   );
 }
 
-export default Landing;
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+})
+
+export default connect(mapStateToProps)(Landing);
