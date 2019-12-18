@@ -21,7 +21,7 @@ const Login = (props) => {
   };
 
   //Redirecet if logged in
-  if(props.isAuthenticated){
+  if (props.isAuthenticated) {
     return <Redirect to="/dashboard"/>
   }
 

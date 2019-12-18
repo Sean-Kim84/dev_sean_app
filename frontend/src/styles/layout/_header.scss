@@ -10,10 +10,11 @@ header {
   padding-left: $small-size;
   font-size: $font-m;
   text-transform: uppercase;
-  .maintitle {
+}
+
+.maintitle {
     letter-spacing: $xsmall-size;
   }
-}
 
 .navbar {
   display: flex;
