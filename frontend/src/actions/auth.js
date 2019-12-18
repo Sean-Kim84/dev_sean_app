@@ -73,7 +73,7 @@ export const login = (email, password) => async dispatch => {
   try {
     const res = await axios.post(`${API}/auth/signin`, body, config);
 
-    dispatch(loadUser());
+    
     
     dispatch({
       type: LOGIN_SUCCESS,
