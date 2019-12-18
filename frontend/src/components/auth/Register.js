@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom'; 
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
@@ -23,6 +24,10 @@ const Register = (props) => {
       props.register({ name, email, password });
     };
   };
+  //Redirecet if logged in
+  if(props.isAuthenticated){
+    return <Redirect to="/dashboard" />
+  }
 
   return (
     <React.Fragment> 
@@ -55,6 +60,10 @@ const Register = (props) => {
     </div>
     </React.Fragment>
   );
-}
+};
 
-export default connect(null, { setAlert, register })(Register);
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+})
+
+export default connect(mapStateToProps, { setAlert, register })(Register);

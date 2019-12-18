@@ -74,7 +74,19 @@ async (req, res) => {
   }
 });
 
-router.post('/signin', async (req, res) => {
+router.post('/signin', [
+  check('email', 'Email is Required').not().isEmpty(),
+  check('password', 'Password is Required').not().isEmpty()
+], 
+async (req, res) => {
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      errors: errors.array()
+    })
+  };
+
   const { email, password } = req.body;
   const user = await User.findByCredentials(email, password);
   
