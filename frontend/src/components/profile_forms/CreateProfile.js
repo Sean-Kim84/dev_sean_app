@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { createProfile } from '../../actions/profile';
 
-const CreateProfile = () => {
+const CreateProfile = (props) => {
   const [formData, setFormData] = useState(() => ({
-    user:"",
     company:"",
     website:"",
     status:"",
@@ -19,7 +20,7 @@ const CreateProfile = () => {
 
   const [ displaySocialInputs, toggleSocialInputs ] = useState(false);
 
-  const { user,
+  const {     
     company,
     website,
     status,
@@ -35,6 +36,11 @@ const CreateProfile = () => {
 
   const onChange = (e) => setFormData({...formData, [e.target.name]: e.target.value});
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    props.createProfile(formData, props.history)
+  }
+
   return (
     <React.Fragment>
       <div className="form_title">
@@ -44,7 +50,7 @@ const CreateProfile = () => {
           Let's get some information to make your profile stand out
         </p>
       </div>
-      <form className="form_container">
+      <form className="form_container" onSubmit={e => onSubmit(e)}>
         <div className="form_left">
           <div className="form-group">
             <select name="status" value={status} onChange={e => onChange(e)}>
@@ -116,13 +122,13 @@ const CreateProfile = () => {
               <input type="text" className="" placeholder="Instagram URL" name="instagram" value={instagram} onChange={e => onChange(e)}/>
             </div>
           </React.Fragment>}
-            <div className="form-submit">
-              <button>Submit</button>
-            </div>
+          </div>
+          <div className="form-submit">
+            <button>Submit</button>
           </div>
       </form>      
     </React.Fragment>
   );
 }
 
-export default connect()(CreateProfile);
+export default connect(null, { createProfile })(withRouter(CreateProfile));
