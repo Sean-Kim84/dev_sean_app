@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { createProfile } from '../../actions/profile';
+import { createProfile, getCurrentProfile } from '../../actions/profile';
 
-const CreateProfile = (props) => {
+const EditProfile = ({ 
+  profile: { profile, loading }, 
+  createProfile, 
+  getCurrentProfile, 
+  history }) => {
   const [formData, setFormData] = useState({
     company:"",
     location:"",
@@ -35,17 +39,35 @@ const CreateProfile = (props) => {
     youtube,
     instagram } = formData;
 
+    useEffect(() => {
+      getCurrentProfile();
+      setFormData({
+        company: loading || !profile.company ? '' : profile.company,
+        website: loading || !profile.website ? '' : profile.website,
+        location: loading || !profile.location ? '' : profile.location,
+        status: loading || !profile.status ? '' : profile.status,
+        skills: loading || !profile.skills ? '' : profile.skills.join(','),
+        githubusername: loading || !profile.githubusername ? '' : profile.githubusername,
+        bio: loading || !profile.bio ? '' : profile.bio,
+        twitter: loading || !profile.social ? '' : profile.social.twitter,
+        facebook: loading || !profile.social ? '' : profile.social.facebook,
+        linkedin: loading || !profile.social ? '' : profile.social.linkedin,
+        youtube: loading || !profile.social ? '' : profile.social.youtube,
+        instagram: loading || !profile.social ? '' : profile.social.instagram
+      });
+    }, [loading])
+
   const onChange = (e) => setFormData({...formData, [e.target.name]: e.target.value});
 
   const onSubmit = (e) => {
     e.preventDefault();
-    props.createProfile(formData, props.history)
+    createProfile(formData, history, true)
   }
 
   return (
     <React.Fragment>
       <div className="form_title">
-        <h1>Create Your Profile</h1>
+        <h1>Edit Your Profile</h1>
         <p>
           <i className="fas fa-user-alt" />
           Let's get some information to make your profile stand out
@@ -76,7 +98,7 @@ const CreateProfile = (props) => {
             <small>Could be  your own company website</small>
           </div>
           <div className="form-group">
-            <input type="text" className="" placeholder="Location" name="location" value={location} onChange={e => onChange(e)} />
+            <input type="text" className="" placeholder="Location" name="location" value={location} onChange={e => onChange(e)}/>
             <small>City & state suggested  (eg. Boston, MA)</small>
           </div>
           <div className="form-group">
@@ -125,11 +147,23 @@ const CreateProfile = (props) => {
           </React.Fragment>}
           </div>
           <div className="form-submit">
-            <button type="submit">Submit</button>
+            <button>Submit</button>
+          </div>
+          <div className="form-back">
+            <button type="submit">
+              <Link to="/dashboard">Go Back</Link>
+            </button>
           </div>
       </form>      
     </React.Fragment>
   );
 }
 
-export default connect(null, { createProfile })(withRouter(CreateProfile));
+const mapStateToProps = state => ({
+  profile: state.profile
+})
+
+export default connect(mapStateToProps, {
+  getCurrentProfile,
+  createProfile
+})(withRouter(EditProfile));

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getCurrentProfile } from '../../actions/profile';
 import Spinner from '../layout/Spinner';
+import DashboardActions from './DashboardActions'
 
 
 const Dashboard = ({ getCurrentProfile, auth, profile: { profile, loading }}) => {
@@ -14,7 +15,7 @@ const Dashboard = ({ getCurrentProfile, auth, profile: { profile, loading }}) =>
         <i className="fas fa-user-alt" />
         Welcome {auth.user && auth.user.name}
         {profile != null ? 
-          <React.Fragment><p>has </p></React.Fragment> : 
+          (<React.Fragment><DashboardActions /></React.Fragment>):
           <React.Fragment>
             <p>You have not yet setup a  Profile, Plesae add some Info</p>
             <Link to="/create-profile">

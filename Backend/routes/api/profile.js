@@ -23,7 +23,7 @@ router.get('/me', auth, async (req, res) => {
   }
 });
 
-//@route POST api/profile/
+//@route POST api/profile
 router.post('/', [
   auth, 
   check('status', 'Status is Required')
@@ -145,7 +145,7 @@ router.delete('/', auth, async (req, res) => {
   }
 });
 
-//@route DELETE api/profile/experience
+//@route PUT api/profile/experience
 router.put('/experience', [
   auth, 
   [
