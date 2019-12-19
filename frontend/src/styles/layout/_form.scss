@@ -1,34 +1,110 @@
-.form_container {
-  width: 100%;
-  height: 90vh;
+.form_title {
+  width:100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.form_inner {
-  width:60vw;
-  height: 60vh;
-}
-
-.form {
-  display:flex;
   flex-direction: column;
-  height: 100%;
-  justify-content: space-evenly;
+  margin-bottom: $medium-size;
+  & h1 {
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-top: $medium-size;
+    font-size: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  & p {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: $large-size;
+    font-size: $font-s;
+  }
+  & i {
+    margin-right: $small-size 
+  }
 }
 
-.form_input {
+.form_container {
+  width: 100vw;
+  height: 80vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
   
-  display:flex;
-  flex-direction: column;
+}
 
-  label {
-    padding-bottom: $small-size;
-    font-size: $font-m
+.form-group {
+  display: flex;
+  flex-direction: column;
+  font-size: $font-m;
+
+  & input, select, textarea {
+    margin-bottom: $small-size;
+    border-radius: 5px;
+  }::placeholder {
+    padding-left: $xsmall-size;
+    color: #223973;
   }
 
-  input {
-    width: 50%;
+  & select {
+    width: 60%;
+    height: $medium-size;
+    color: #223973;
+  }
+
+  & input {
+    height: $medium-size;
+  }
+  
+
+  & textarea {
+    height: 20vh;
+  }
+}
+
+.form_left {
+  width: 80%;
+  display: flex;
+  
+  flex-direction: column;
+  & .form-group {
+    margin-bottom: $medium-size;
+  }
+}
+
+.form_right {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  & .option-button {
+    margin-top: $small-size;
+    padding: $small-size; 
+    font-size: $font-s;
+    width: 30%;
+    align-items: center;
+    border-radius: 5px;
+    margin-bottom: $small-size;
+  } 
+  & .form-submit {
+    display: flex; 
+    justify-content: flex-end;
+
+    & button {
+      font-size: $font-m;
+      padding: $xsmall-size $small-size;
+      border-radius: 5px;
+    }
+  }
+}
+
+.option-group {
+  & i {
+    margin-right: $small-size;
+    font-size: $font-m; 
+  }
+  & input {
+    border-radius: 5px;
+    width: 80%;
+    height: $medium-size;
+    margin-bottom: $small-size;
   }
 }

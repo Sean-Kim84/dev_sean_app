@@ -5,15 +5,12 @@ import { GET_PROFILE, PROFILE_ERROR } from './types';
 
 // Get current User profile
 export const getCurrentProfile = () => async (dispatch) => {
-  await dispatch(loadUser());
   try { 
-    
     const res = await axios.get(`${API}/profile/me`);
     dispatch({
       type: GET_PROFILE,
       payload: res.data
     });
-
     
   } catch(err){
     console.log(err);

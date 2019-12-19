@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getCurrentProfile } from '../../actions/profile';
 import Spinner from '../layout/Spinner';
 
@@ -11,10 +12,15 @@ const Dashboard = ({ getCurrentProfile, auth, profile: { profile, loading }}) =>
   return loading && profile === null ? <Spinner /> : <React.Fragment>
       <h2>Dash Board</h2>
         <i className="fas fa-user-alt" />
-        
+        Welcome {auth.user && auth.user.name}
         {profile != null ? 
           <React.Fragment><p>has </p></React.Fragment> : 
-          <React.Fragment><p>has not</p></React.Fragment>}
+          <React.Fragment>
+            <p>You have not yet setup a  Profile, Plesae add some Info</p>
+            <Link to="/create-profile">
+              <button>Create Profile</button>
+            </Link>
+          </React.Fragment>}
     </React.Fragment>
 }
 
