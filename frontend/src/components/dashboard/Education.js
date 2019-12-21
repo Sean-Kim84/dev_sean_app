@@ -2,6 +2,8 @@ import React from 'react';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
 
+import { deleteEducation } from '../../actions/profile';
+
 const Education = (props) => {
   const educations = props.education.map(edu => (
     <tr key={edu._id}>
@@ -16,7 +18,7 @@ const Education = (props) => {
         }
       </td>
       <td>
-        <button>Delete</button>
+        <button onClick={() => props.deleteEducation(edu._id)}>Delete</button>
       </td>
     </tr>
   ))
@@ -42,4 +44,6 @@ const Education = (props) => {
   );
 }
 
-export default connect()(Education);
+export default connect(null, {
+  deleteEducation
+})(Education);

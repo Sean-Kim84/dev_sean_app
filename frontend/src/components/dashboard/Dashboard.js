@@ -1,17 +1,27 @@
 import React, { useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getCurrentProfile } from '../../actions/profile';
+import {
+  getCurrentProfile,
+  deleteAccount
+} from '../../actions/profile';
 import Spinner from '../layout/Spinner';
 import DashboardActions from './DashboardActions'
 import Experience from './Experience';
 import Education from './Education';
 
 
-const Dashboard = ({ getCurrentProfile, auth, profile: { profile, loading }}) => {
+const Dashboard = ({ getCurrentProfile, auth, profile: { profile, loading }, deleteAccount}) => {
   useEffect(() => {
     getCurrentProfile();
   }, []);
+
+  //Redirecet if logged in
+  if (!auth.isAuthenticated) {
+    return <Redirect to = "/" / >
+  }
+
   return loading && profile === null ? <Spinner /> : <React.Fragment>
       <h2>Dash Board</h2>
         <i className="fas fa-user-alt" />
@@ -21,13 +31,17 @@ const Dashboard = ({ getCurrentProfile, auth, profile: { profile, loading }}) =>
             <DashboardActions />
             <Experience experience={profile.experience}/>
             <Education education={profile.education} />
-          </React.Fragment>):
+            <div>
+              <i className="fas fa-user-slash" />
+              <button onClick={() => deleteAccount()}>Delete Account</button>
+            </div>
+          </React.Fragment> ) : (
           <React.Fragment>
             <p>You have not yet setup a  Profile, Plesae add some Info</p>
             <Link to="/create-profile">
               <button>Create Profile</button>
             </Link>
-          </React.Fragment>}
+          </React.Fragment>)}
     </React.Fragment>
 }
 
@@ -36,4 +50,7 @@ const mapStateToProps = state => ({
   profile: state.profile
 })
 
-export default connect(mapStateToProps, { getCurrentProfile })(Dashboard);
+export default connect(mapStateToProps, {
+  getCurrentProfile,
+  deleteAccount
+})(Dashboard);
