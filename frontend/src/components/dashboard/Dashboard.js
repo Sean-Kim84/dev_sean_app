@@ -15,7 +15,7 @@ import Education from './Education';
 const Dashboard = ({ getCurrentProfile, auth, profile: { profile, loading }, deleteAccount}) => {
   useEffect(() => {
     getCurrentProfile();
-  }, []);
+  }, [getCurrentProfile]);
 
   //Redirecet if logged in
   if (!auth.isAuthenticated) {
