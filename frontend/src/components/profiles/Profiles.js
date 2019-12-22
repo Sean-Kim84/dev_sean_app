@@ -21,7 +21,7 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
             Browse and connect with Developers
           </p>
         </React.Fragment>}
-        <div className="">
+        <div className="devs">
           {profiles.length > 0 ? (
             profiles.map(profile => <ProfileItem key={profile._id} profile={profile} />)
           ) : (<h4>No Profile Fount...</h4>)}

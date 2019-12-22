@@ -13,12 +13,10 @@ const Navbar = (props) => {
             <span>Developers</span>
           </Link>
         </li>
-        <Link>
           <Link to="/dashboard">
             <i className="fas fa-user" />
             <span>Dashboard</span>
           </Link>
-        </Link>
         <li>
           <a onClick={() => props.logout()} href="/login">
             <i className="fas fa-sign-out-alt"/>
