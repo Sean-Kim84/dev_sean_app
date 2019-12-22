@@ -8,16 +8,19 @@ const Navbar = (props) => {
   const authLinks  = (
     <ul className="navbar">
         <li>
-          <Link to="/">Devs</Link>
+          <Link to="/profiles">
+            <i className="fas fa-users"></i>
+            <span>Developers</span>
+          </Link>
         </li>
-        <li>
+        <Link>
           <Link to="/dashboard">
             <i className="fas fa-user" />
             <span>Dashboard</span>
           </Link>
-        </li>
+        </Link>
         <li>
-          <a onClick={props.logout} href="/login">
+          <a onClick={() => props.logout()} href="/login">
             <i className="fas fa-sign-out-alt"/>
             <span>Logout</span>
           </a>
@@ -27,6 +30,12 @@ const Navbar = (props) => {
 
   const guestLinks  = (
     <ul className="navbar">
+        <li>
+          <Link to="/profiles">
+            <i className="fas fa-users"></i>
+            <span>Developers</span>
+          </Link>
+        </li>
         <li>
           <Link to="/register">
             <i className="fas fa-sign-in-alt" />
