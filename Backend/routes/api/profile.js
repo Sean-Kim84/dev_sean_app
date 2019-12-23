@@ -13,7 +13,7 @@ const router = express.Router();
 router.get('/me', auth, async (req, res) => {
   try {
     // {user:req.user.id} 는 Profile model의 user field를 가르킨다
-    const profile = await Profile.findOne({ user: req.user.id }).populate('user', ['name', 'avatar']);
+    const profile = await Profile.findOne({ user: req.user.id }).populate('user', ['name, avatar']);
     if(!profile){
       return res.status(400).json({msg: 'There is no Profile for this User'});
     } 
@@ -100,7 +100,7 @@ router.post('/', [
 //@route GET api/profile/
 router.get('/', async (req, res) => {
   try {
-    const profiles = await Profile.find().populate('user', ['name,', 'avatar'])
+    const profiles = await Profile.find().populate('user', ['name', 'avatar'])
     res.json(profiles);
   } catch(err) {
     console.error(err);
@@ -111,7 +111,7 @@ router.get('/', async (req, res) => {
 //@route GET api/profile/user/:user_id
 router.get('/user/:user_id', async (req, res) => {
   try {
-    const profile = await Profile.findOne({user: req.params.user_id}).populate('user', ['name,', 'avatar'])
+    const profile = await Profile.findOne({user: req.params.user_id}).populate('user', ['name', 'avatar'])
     if(!profile) {
       return res.status(400).json({
         msg: 'Profile not found'

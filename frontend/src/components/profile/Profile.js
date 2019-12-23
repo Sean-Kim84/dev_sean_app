@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Spinner from '../layout/Spinner';
+import ProfileTop from './ProfileTop';
+import ProfileAbout from './ProfileAbout';
 import { getProfileById } from '../../actions/profile';
 
 const Profile = ({ 
@@ -13,6 +15,7 @@ const Profile = ({
   useEffect(() => {
     getProfileById(match.params.id);
   }, [getProfileById])
+  
   return (
     <React.Fragment>
       {loading || profile === null ? <Spinner /> : (
@@ -26,6 +29,11 @@ const Profile = ({
                 Edit Profile
               </Link>
             )}
+            <div className="">
+              <ProfileTop profile={profile} />
+              <ProfileAbout profile={profile} />
+            </div>
+            
           </React.Fragment>
         )}
     </React.Fragment>

@@ -8,6 +8,7 @@ const EditProfile = ({
   createProfile, 
   getCurrentProfile, 
   history }) => {
+
   const [formData, setFormData] = useState({
     company:"",
     location:"",
@@ -16,11 +17,13 @@ const EditProfile = ({
     skills:"",
     githubusername:"",
     bio:"",
-    twitter:"",
-    facebook:"",
-    linkedin:"",
-    youtube:"",
-    instagram:"",
+    social: { 
+      twitter:"",
+      facebook:"",
+      linkedin:"",
+      youtube:"",
+      instagram:""
+    }
   });
 
   const [ displaySocialInputs, toggleSocialInputs ] = useState(false);
@@ -33,11 +36,12 @@ const EditProfile = ({
     location,
     githubusername,
     bio,
-    twitter,
+    twitter ,
     facebook,
     linkedin,
     youtube,
-    instagram } = formData;
+    instagram
+  } = formData;
 
     useEffect(() => {
       getCurrentProfile();

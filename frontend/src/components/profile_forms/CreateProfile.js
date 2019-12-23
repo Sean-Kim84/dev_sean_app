@@ -12,11 +12,13 @@ const CreateProfile = (props) => {
     skills:"",
     githubusername:"",
     bio:"",
-    twitter:"",
-    facebook:"",
-    linkedin:"",
-    youtube:"",
-    instagram:"",
+    social: {
+      twitter: "",
+      facebook: "",
+      linkedin: "",
+      youtube: "",
+      instagram: ""
+    }
   });
 
   const [ displaySocialInputs, toggleSocialInputs ] = useState(false);
@@ -29,11 +31,13 @@ const CreateProfile = (props) => {
     location,
     githubusername,
     bio,
-    twitter,
-    facebook,
-    linkedin,
-    youtube,
-    instagram } = formData;
+   
+      twitter,
+      youtube,
+      instagram,
+      facebook,
+      linkedin
+   } = formData;
 
   const onChange = (e) => setFormData({...formData, [e.target.name]: e.target.value});
 

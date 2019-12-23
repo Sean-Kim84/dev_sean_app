@@ -2,8 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-const ProfileItem = ({ profile:{ 
-  user: {_id, name, avatar}, 
+const ProfileItem = ({ 
+  profile: { 
+  user: { _id, name, avatar }, 
   status, 
   company, 
   location, 
